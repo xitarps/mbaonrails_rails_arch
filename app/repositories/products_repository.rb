@@ -24,6 +24,14 @@ class ProductsRepository
     repository
   end
 
+  def self.search(field, term)
+    Product.search(field, term).map do |product|
+      repository = self.new
+      repository.product = product
+      repository
+    end
+  end
+
   def update(attributes)
     @product.update(attributes)
   end

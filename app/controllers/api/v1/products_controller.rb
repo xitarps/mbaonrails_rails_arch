@@ -2,7 +2,11 @@ class Api::V1::ProductsController < Api::V1::ApplicationController
   before_action :fetch_product, only: %i[show update destroy]
 
   def index
-    @products = ProductsRepository.all
+    if params[:term] && params[:field]
+      @products = ProductsRepository.search(params[:field], params[:term])
+    else
+      @products = ProductsRepository.all
+    end
   end
 
   def show; end

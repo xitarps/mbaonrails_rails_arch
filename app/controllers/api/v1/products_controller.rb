@@ -3,24 +3,21 @@ class Api::V1::ProductsController < Api::V1::ApplicationController
 
   def index
     @products = Product.all
-    render json: @products
   end
 
-  def show
-    render json: @product
-  end
+  def show; end
 
   def create
     @product = Product.new(product_params)
-    return render json: @product if @product.save
+    return render :create if @product.save
 
-    render json: { errors: @product.errors.full_messages }, status: 400
+    render 'api/v1/shared/errors', locals: { object: @product }, status: 400
   end
 
   def update
-    return render json: @product if @product.update(product_params)
+    return render :update if @product.update(product_params)
 
-    render json: { errors: @product.errors.full_messages }, status: 400
+    render 'api/v1/shared/errors', locals: { object: @product }, status: 400
   end
 
   def destroy

@@ -2,13 +2,13 @@ class Api::V1::ProductsController < Api::V1::ApplicationController
   before_action :fetch_product, only: %i[show update destroy]
 
   def index
-    @products = Product.all
+    @products = ProductsRepository.all
   end
 
   def show; end
 
   def create
-    @product = Product.new(product_params)
+    @product = ProductsRepository.new(product_params)
     return render :create if @product.save
 
     render 'api/v1/shared/errors', locals: { object: @product }, status: 400
@@ -33,6 +33,6 @@ class Api::V1::ProductsController < Api::V1::ApplicationController
   end
 
   def fetch_product
-    @product = Product.find(params[:id])
+    @product = ProductsRepository.find(params[:id])
   end
 end

@@ -2,9 +2,10 @@ module Searchable
   extend ActiveSupport::Concern
 
   class_methods do
-    def search(field, term)
-      table = self.arel_table
-      self.where(table[field].matches("%#{term}%"))
+    def search(term)
+      fields = new.attributes.keys.excluding('id', 'created_at', 'updated_at')
+      table_name = self.table_name
+      Products::SearchQuery.call(table_name:, fields:, term:)
     end
   end
 end

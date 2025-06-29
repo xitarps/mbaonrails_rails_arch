@@ -24,10 +24,13 @@ class ProductsRepository
     repository
   end
 
-  def self.search(field, term)
-    Product.search(field, term).map do |product|
+  def self.search(term)
+    Product.search(term).map do |product_hash|
       repository = self.new
-      repository.product = product
+      temporary_product = Product.new(product_hash)
+      temporary_product.instance_variable_set(:@new_record, false)
+      repository.product = temporary_product
+
       repository
     end
   end

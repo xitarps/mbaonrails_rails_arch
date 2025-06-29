@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :products do
         get :search, on: :collection, action: :index
+        post :generate_report, on: :collection
       end
     end
   end

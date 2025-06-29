@@ -6,6 +6,16 @@ class ProductsRepository
     self
   end
 
+  def id = @product.id
+  def created_at = @product.created_at
+  def updated_at = @product.updated_at
+  def price = @product.price
+  def name = @product.name
+
+  def self.instance_attributes
+    @@instance_attributes ||= Product.new.attributes.keys
+  end
+
   def save
     @product.save
   end
@@ -41,14 +51,6 @@ class ProductsRepository
 
   def destroy
     @product.destroy
-  end
-
-  def price
-    @product.price
-  end
-
-  def name
-    @product.name
   end
 
   def errors

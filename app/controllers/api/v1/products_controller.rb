@@ -27,6 +27,18 @@ class Api::V1::ProductsController < Api::V1::ApplicationController
     render json: {}, status: :no_content
   end
 
+  def generate_report
+    respond_to do |format|
+      format.csv do 
+        service = Products::GenerateReportService.call(type: params[:type])
+
+        return render json: { error: service.errors }, status: :expectation_failed if service.errors.any?
+
+        send_data(service.data, filename: "products-#{Date.today}.csv")
+      end
+    end
+  end
+
   private
 
   def product_params

@@ -23,7 +23,7 @@ class Api::V1::ProductsController < Api::V1::ApplicationController
 
   def destroy
     @product.destroy
-  
+
     render json: {}, status: :no_content
   end
 
